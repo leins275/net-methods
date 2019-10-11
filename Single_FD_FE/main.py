@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import integrate
 import matplotlib.pyplot as plt
 
 
@@ -18,8 +19,8 @@ def create_uniform_net(a, b, n):
     return net, f
 
 
-def tridiagonal_matrix_alg(n, b, c, d, r, u0, un):
-    u = [0] * n
+def tridiagonal_matrix_solve(n, b, c, d, r):
+    v = [0] * n
     beta = []
     alpha = []
 
@@ -34,38 +35,63 @@ def tridiagonal_matrix_alg(n, b, c, d, r, u0, un):
         alpha.append(new_alpha)
         beta.append(new_beta)
 
-    # counting u values
+    # counting v values
     for i in range(n - 1, 0, -1):
         if i == n - 1:
-            u[i] = un
-            # u[i] = (r[i] - b[i] * beta[i - 1]) / (c[i] + b[i] * alpha[i - 1])
+            # v[i] = r[i - 1]
+            v[i] = (r[i] - b[i] * beta[i - 1]) / (c[i] + b[i] * alpha[i - 1])
         else:
-            u[i] = alpha[i] * u[i + 1] + beta[i]
+            v[i] = alpha[i] * v[i + 1] + beta[i]
 
-    return u
+    return v
 
 
 def fdm(n, u0, un, h):
+    # build matrix
     b = [-1] * n
     c = [2] * n
     d = [-1] * n
-    r = [2 * h ** 2] * n
+    r = [2 * (h ** 2)] * n
+    c[0] = 1
+    c[n - 1] = 1
+    d[0] = 0
+    d[n - 1] = 0
+    b[0] = 0
+    b[n - 1] = 0
+    r[0] = u0
+    r[n - 1] = un
 
-    return tridiagonal_matrix_alg(n, b, c, d, r, u0, un)
+    # solve
+    return tridiagonal_matrix_solve(n, b, c, d, r)
+
+
+def fem(n, u0, un, h):
+    b = [0] * n
+    c = [0] * n
+    d = [0] * n
+    r = [0] * n
+    # solve
+    return tridiagonal_matrix_solve(n, b, c, d, r)
 
 
 if __name__ == '__main__':
-    a = 0
-    l = 1
-    n = 11
+    a = 0  # interval begin
+    l = 1  # interval end
+    n = 1000  # num of nodes
     h = (l - a) / n
-    x, y = create_uniform_net(a, l, n - 1)
-    u = fdm(n, 0, 0, h)
+    x, u = create_uniform_net(a, l, n - 1)
+    v = fdm(n, 0, 0, h)
     # u.reverse()
 
+    print(h)
     plt.figure()
-    plt.plot(x, y, 'r*')
-    plt.plot(x, u, 'b--')
-    plt.plot(x, u, 'bd')
+    plt.plot(x, u, 'r*')
+    plt.plot(x, v, 'b--')
+    plt.plot(x, v, 'bd')
+    delta = []
+    for i in range(len(x)):
+        delta.append(abs(u[i] - v[i]))
+    print(max(delta))
+    plt.plot(x, delta, 'k')
     plt.grid()
     plt.show()
