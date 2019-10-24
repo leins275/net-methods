@@ -1,0 +1,3 @@
+function y = f(x)
+  y = -e ^ x * cos(e ^ x) + e ^ (2 * x) * sin(e ^ x) + ...
+      p(x) * e ^ (x) * cos(e ^ x) + sin(e ^ x) * q(x);
