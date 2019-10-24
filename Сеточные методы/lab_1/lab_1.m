@@ -1,5 +1,5 @@
 clear;
-n = 100000;  % num of nodes
+n = 10000;  % num of nodes
 a = 0;
 b = 2;
 h = (b - a) / n;

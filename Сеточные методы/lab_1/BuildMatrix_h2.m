@@ -18,8 +18,8 @@ function y = BuildMatrix_h2(x, h)
     matrix(1, i) = -1 / power(h, 2) + P(i) / (2 * h);  
   end
   matrix(1, n) = 1 / (2 * h);
-  matrix(2, n) = -2 / h;
-  matrix(3, n) = 3 / (2 * h)  + 1;
+  matrix(3, n) = -2 / h;
+  matrix(2, n) = 3 / (2 * h)  + 1;
   
   y = matrix;
   
