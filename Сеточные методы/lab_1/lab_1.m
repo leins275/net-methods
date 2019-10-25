@@ -1,6 +1,6 @@
 clear all;
 
-n = 20000000;  % num of nodes
+n = 20000;  % num of nodes
 
 % n = [20, 40, 100, 1000, 10000, 300000]
 hi =[];
@@ -13,11 +13,15 @@ b = 2.0;
 h = (b - a) / n;
 x = a : h : b;
 
+tic;
 y1 = u(x);
 y = h2(n, a, b);
 n = length(x);
 
 delta = norm(y - y1, h, n);
+time = toc;
+time
+
 % h
 % delta
 % delta = [delta, norm(y - y1, h, n(i))];
