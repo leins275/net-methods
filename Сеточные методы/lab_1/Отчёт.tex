@@ -97,8 +97,8 @@
 $$
 \begin{cases}
 -\dfrac{d^2u}{dx^2} + e^x\dfrac{du}{dx} + u(cos^2(x) + 1) = f(x), & x \in [0;2] \\ \\
-\dfrac{du}{dx}(0) + u(0) = sin(1) - cos(1) \\ \\
-\dfrac{du}{dx}(0) + u(0) = e^2cos(e^2) + sin(e^2)
+\dfrac{du}{dx}(0.5) + u(0.5) = e^{0.5}sin(e^{0.5}) - cos(e^{0.5}) \\ \\
+\dfrac{du}{dx}(2) + u(2) = e^2cos(e^2) + sin(e^2)
 \end{cases}
 $$
 
@@ -124,7 +124,7 @@ $$
 при выборе данного шаблона для аппроксимации первой и второй производной  мы получим требуемую погрешность . Для такого шаблона ранее были выведены аппроксимации первой и второй производных, а именно:
 
 $$
-u_{\dot{x}} = \dfrac{u_{i + 1} + u_{i - 1}}{2h}
+u_{\dot{x}} = \dfrac{u_{i + 1} - u_{i - 1}}{2h}
 $$
 
 $$
@@ -161,7 +161,7 @@ $$
 \begin{cases}
 v_{i-1}(-\dfrac{1}{h^2} - \dfrac{e^{x_i}}{2h}) + v_i(\dfrac{2}{h^2} + sin^2(x_i) + 1) + v_{i + 1}(-\dfrac{1}{h^2} + \dfrac{e^{x_i}}{2h}) = f_i^*\\
 \\
-v_o(\dfrac{3}{2h}  +1) + v_1(-\dfrac{2}{h}) + v_2(\dfrac{1}{2h}) = sin(1) - cos(1)\\
+v_o(\dfrac{3}{2h}  +1) + v_1(-\dfrac{2}{h}) + v_2(\dfrac{1}{2h}) = e^{0.5}sin(e^{0.5}) - cos(e^{0.5})\\
 \\
 v_{M-2}(\dfrac{1}{2h}) + v_{M-1}(-\dfrac{2}{h})  +v_M(\dfrac{3}{2h} + 1) = e^2cos(e^2) + sin(e^2)
 \end{cases}
@@ -242,14 +242,14 @@ $$
 \begin{pmatrix}
 	\dfrac{1}{h} + 1& -\dfrac{1}{h} &  0 & 0 & ... \\
 	\\
-	-\dfrac{1}{h^2}  & \dfrac{2}{h^2} - \dfrac{e^{x_2}}{h} + sin^2(x_2) + 1 & -\dfrac{2}{h^2} + \dfrac{e^{x_2}}{h} & 0 & ... \\
+	-\dfrac{1}{h^2}  & \dfrac{2}{h^2} - \dfrac{e^{x_2}}{h} + sin^2(x_2) + 1 & -\dfrac{1}{h^2} + \dfrac{e^{x_2}}{h} & 0 & ... \\
 	\\
 	0 & -\dfrac{1}{h^2} & \dfrac{2}{h^2} - \dfrac{e^{x_3}}{h} + sin^2(x_3) + 1 &
-	 -\dfrac{1}{h^2} + \dfrac{e^{x_3}}{2h} & ... \\
+	 -\dfrac{1}{h^2} + \dfrac{e^{x_3}}{h} & ... \\
 	... & ... & ... & ... & ... \\
 	\\
 	... & 0 & \dfrac{-1}{h^2} & \dfrac{2}{h^2} - \dfrac{e^{x_3}}{h} + sin^2(x_3) + 1 &
-	 -\dfrac{1}{h^2} + \dfrac{e^{x_{M-1}}}{2h} \\
+	 -\dfrac{1}{h^2} + \dfrac{e^{x_{M-1}}}{h} \\
 	\\
 	... & 0 & 0 & -\dfrac{1}{h} & \dfrac{1}{h} + 1\\
 \end{pmatrix}
@@ -263,15 +263,108 @@ $$
 $$
 ||z_h|| = || u_h - v_h ||
 $$
-
 Норму будем вычислять по формуле:
-
 $$
 ||x|| = \sqrt{h\sum\limits_{i=1}^M x_i^2}
 $$
 
-\subsection{Разностная схема $O(h^2)$}
+\begin{figure}
+\begin{center}
+\includegraphics[scale = 0.4]{h2_20.png} 
+\end{center}
+\caption{$O(h^2), n = 20$ }
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale = 0.4]{h2_100.png} 
+\end{center}
+\caption{$O(h^2), n = 100$ }
+\end{figure}
+
+\begin{table}[H]
+\caption{Зависимость погрешности от числа узлов}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textit{Число узлов} &$ h$ & $||z_h||$  \\
+\hline
+20 & 0.75 & 0.0200350 \\
+\hline
+40 & 0.0375 & 0.0071457 \\
+\hline
+100 & 0.015 & 0.0041768 \\
+\hline
+1000 & 0.0015 & 0.0028642 \\
+\hline
+10000 & 0.00015 & 0.0027157 \\
+\hline
+65536 & 0.000022888 & 0.0027014 \\
+\hline
+1000000 & 0.0000015000 & 0.0026990 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection{Разностная схема $O(h)$}
+
+\newpage
+\begin{figure}
+\begin{center}
+\includegraphics[scale = 0.4]{h_20.png} 
+\end{center}
+\caption{$O(h), n = 20$ }
+\end{figure}
+
+\newpage
+\begin{figure}
+\begin{center}
+\includegraphics[scale = 0.4]{h_100.png} 
+\end{center}
+\caption{$O(h), n = 100$}
+\end{figure}
+
+\newpage
+\begin{table}[H]
+\caption{Зависимость погрешности от числа узлов}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textit{Число узлов} &$ h$ & $||z_h||$  \\
+\hline
+20 & 0.75 & 0.2055764 \\
+\hline
+40 & 0.0375 & 0.1030405 \\
+\hline
+100 & 0.015 & 0.0407417 \\
+\hline
+1000 & 0.0015 & 0.0037649\\
+\hline
+10000 & 0.00015 & 0.0025252 \\
+\hline
+65536 & 0.000022888 & 0.0026688 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 \subsection{Зависимости погрешности от шага}
+
+% \begin{table}[H]
+% \caption{Зависимость погрешности от числа узлов}
+% \begin{center}
+% \begin{tabular}{|c|c|c|}
+%\hline
+%\textit{Число узлов} &$ h$ & $||z_h||$  \\
+%\hline
+%20 & 0.75 & 0.0200350 \\
+%\hline
+%40 & 0.0375 & 0.0071457 \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{table}
 
 \section{Выводы}
 

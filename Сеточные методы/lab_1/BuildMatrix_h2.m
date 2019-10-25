@@ -1,7 +1,7 @@
 function y = BuildMatrix_h2(x, h)
   n = length(x);
   
-  matrix = zeros(3, n, "single");
+  matrix = zeros(3, n);
   
   for i = 1:n
     X = x(i);

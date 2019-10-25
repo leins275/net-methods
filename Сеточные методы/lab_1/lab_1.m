@@ -1,30 +1,37 @@
-clear;
-n = 10000;  % num of nodes
-a = 0;
-b = 2;
+clear all;
+
+n = 20000000;  % num of nodes
+
+% n = [20, 40, 100, 1000, 10000, 300000]
+hi =[];
+delta = [];
+% for n = 10:1: 100
+% for i = 1: length(n)
+a = 0.5;
+b = 2.0;
+
 h = (b - a) / n;
 x = a : h : b;
+
+y1 = u(x);
+y = h2(n, a, b);
 n = length(x);
 
-m = BuildMatrix_h2(x, h);
-for i = 1:n, r(i) = f(x(i)); end
-r(1) = sin(1) - cos(1);
-r(n) = e ^ 2 * cos(e ^ 2) + sin(e ^ 2);
-r = UpdateF(n, m, r);
+delta = norm(y - y1, h, n);
+% h
+% delta
+% delta = [delta, norm(y - y1, h, n(i))];
+% hi = [hi, h];
+% endfor
+% pp = n = 10:1:100;
+% figure();
+% plot(pp, delta);
+% [min, ind] = min(delta);
 
-m = MakeTridiag(n, m);
-  
-for i = 1:n - 1, b(i) = m(3, i); end
-b(n) = 0;
-d(1) = 0;  
-for i = 2:n, d(i) = m(1, i); end
-% y = TrDiagMatrSolve(b, m(2, :), d, r);
-y = TrDiagMatrSolve(m(3, :), m(2, :), m(1, :), r);
-y1 = u(x);
-
-axis([min(x), max(x), min(y1 + y), max(y1 + y)]);
-
-hold on;
-plot(x, y, 'linewidth', 2);
-plot(x, y1, 'r', 'linewidth', 2);
+%hold on;
+%grid on;
+%axis([min(x), max(x), min(y1 + y), max(y1 + y)]);
+%plot(x, y, 'linewidth', 2);
+%plot(x, y1, 'r', 'linewidth', 2);
+%legend("v, h = 0.75", "u: y = sin(e^x)");
 
