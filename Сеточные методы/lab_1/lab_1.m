@@ -1,26 +1,32 @@
 clear all;
 
-n = 20000;  % num of nodes
+% n = 20000;  % num of nodes
 
-% n = [20, 40, 100, 1000, 10000, 300000]
-hi =[];
-delta = [];
-% for n = 10:1: 100
-% for i = 1: length(n)
 a = 0.5;
 b = 2.0;
+n = [10, 20, 40, 80, 160];
+for i = 1: length(n)
+  h(i) = (b - a) / n(i);
+  x = a : h(i) : b;
 
-h = (b - a) / n;
-x = a : h : b;
+  tic;
+  y1 = u(x);
+  y = FiniteMethod(n(i), a, b, 2);
+  % ni = length(x);
 
-tic;
-y1 = u(x);
-y = h2(n, a, b);
-n = length(x);
+  delta(i) = norm(y - y1, h(i), n(i)); 
+  time = toc;
+  
+  h1 = h(i)
+  delta1 = delta(i)
+end
 
-delta = norm(y - y1, h, n);
-time = toc;
-time
+figure;
+hold on;
+loglog(h, delta, 'linewidth', 2);
+x = 0.01:0.01: 0.1;
+y = x .* 2 - 0.1;
+plot(x, y, 'r')
 
 % h
 % delta
