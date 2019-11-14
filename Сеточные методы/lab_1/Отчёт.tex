@@ -314,16 +314,16 @@ $$
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.5]{h2_20.jpg} 
+\includegraphics[scale = 0.65]{h2_20.jpg} 
 \end{center}
-\caption{$O(h^2), n = 20$ }
+\caption{Разностная схема $O(h^2), n = 20$ }
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.5]{h2_100.jpg} 
+\includegraphics[scale = 0.65]{h2_100.jpg} 
 \end{center}
-\caption{$O(h^2), n = 100$ }
+\caption{Разностная схема $O(h^2), n = 100$ }
 \end{figure}
 
 \subsection{Разностная схема $O(h)$}
@@ -381,16 +381,16 @@ $$
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.5]{h1_20.jpg} 
+\includegraphics[scale = 0.65]{h1_20.jpg} 
 \end{center}
-\caption{$O(h), n = 20$ }
+\caption{Разностная схема $O(h), n = 20$ }
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.5]{h1_100.jpg} 
+\includegraphics[scale = 0.65]{h1_100.jpg} 
 \end{center}
-\caption{$O(h), n = 100$}
+\caption{Разностная схема $O(h), n = 100$}
 \end{figure}
 
 
@@ -399,44 +399,30 @@ $$
 \subsection{Зависимости погрешности от шага}
 
 \begin{table}[H]
-\caption{Зависимость погрешности от числа узлов}
+\caption{\label{tab:zh} Зависимость $||z_h||$ от величины шага для двух разностных схем.}
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-$h$ & $||z_h||$ & $k$ \\
+& \multicolumn{2}{c|}{$||z_h||$} \\
+\cline{2-3}
+\raisebox{1.5ex}[0cm][0cm]{$h$}
+& $O(h^2)$ & $O(h)$ \\
 \hline
-0.0011728 & 4.7483e-06 & 2 \\
+0.0011728 & 4.7483e-06 & 0.0016534 \\
 \hline
-5.8617e-04 & 1.1856e-06 & 2 \\
+5.8617e-04 & 1.1856e-06 & 8.2667e-04 \\
 \hline
-2.9303e-04 & 2.9623e-07 & 2 \\
+2.9303e-04 & 2.9623e-07 & 4.1333e-04 \\
 \hline
-7.3246e-05 & 7.4034e-08 & 2 \\
+7.3246e-05 & 7.4034e-08 & 2.0666e-04 \\
 \hline
-3.6622e-05 & 1.8517e-08 & 2 \\
+3.6622e-05 & 1.8517e-08 & 1.0333e-04 \\
 \hline
-1.8311e-05 & 4.6819e-09 & 2 \\
+1.8311e-05 & 4.6819e-09 & 5.1665e-05 \\
 \hline
-9.1553e-06 & 1.5348e-09 & 2 \\
+9.1553e-06 & 1.5348e-09 & 2.5833e-05 \\
 \hline
-4.5777e-06 & 2.6090e-09 & 2 \\
-\hline
-\hline
-0.0011728 & 0.0016534 & 1 \\
-\hline
-5.8617e-04 & 8.2667e-04 & 1 \\
-\hline
-2.9303e-04 & 4.1333e-04 & 1 \\
-\hline
-7.3246e-05 & 2.0666e-04 & 1 \\
-\hline
-3.6622e-05 & 1.0333e-04 & 1 \\
-\hline
-1.8311e-05 & 5.1665e-05 & 1 \\
-\hline
-9.1553e-06 & 2.5833e-05 & 1 \\
-\hline
-4.5777e-06 & 1.2916e-05 & 1 \\
+4.5777e-06 & 2.6090e-09 & 1.2916e-05 \\
 \hline
 \end{tabular}
 \end{center}
@@ -444,21 +430,14 @@ $h$ & $||z_h||$ & $k$ \\
 
 Построим графики зависимостей логарифма нормы разности точного и приближенного решения от логарифма шага. Рядом изобразим прямые с угловыми коэффициентами 1 и 2 соответственно для схем O(h) и O($h^2$). Из графиков видно, что логарифмические прямые имеют угловой коэффициент наклона, соответствующий порядку точности схемы, что согласуется с теорией. Также видно явление, при котором начиная с определённого момента мы достигли погрешности округления, и логарифмическая "прямая" перестаёт быть прямой.
 
-\newpage
-
-\begin{figure}
+\begin{figure}[ht]
 \begin{center}
-\includegraphics[scale = 0.4]{loglog2.jpg} 
+\includegraphics[width=\linewidth]{loglog2.jpg} 
 \end{center}
 \caption{$O(h^2)$}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[scale = 0.4]{loglog1.jpg} 
-\end{center}
-\caption{$O(h)$}
-\end{figure}
+\pagebreak
 
 \section{Выводы}
 
