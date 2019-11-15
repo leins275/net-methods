@@ -18,11 +18,15 @@ function [y, x, h] = FiniteElemMethod(n, a, b)
   r(n) = 0;
   
   for i = 2:n-1    
-    D(i) = - 1;
-    C(i) = 2 ;
-    B(i) = - 1;
-    r(i) = 2 * (x(i) .^ 2 - x(i) * (x(i - 1) + x(i + 1))) + ...
-    x(i - 1) .^ 2 + x(i + 1) .^ 2;
+    D(i) = - 1 / h;
+    C(i) = 2 / h ;
+    B(i) = - 1 / h;
+    f1 = @(y) (f(y, x(i - 1)));
+    f2 = @(y) (f(y, x(i + 1)));
+    r(i) = (1 / h) .* (integral(f1, x(i - 1), x(i)) - ...
+           integral(f2, x(i), x(i + 1)));
+    %2 * (x(i) .^ 2 - x(i) * (x(i - 1) + x(i + 1))) + ...
+    %x(i - 1) .^ 2 + x(i + 1) .^ 2;
   end
   %{
   B

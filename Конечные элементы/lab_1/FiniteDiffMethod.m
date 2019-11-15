@@ -21,7 +21,7 @@ function [y, x, h] = FiniteDiffMethod(n, a, b)
     D(i) = - 1;
     C(i) = 2 ;
     B(i) = - 1;
-    r(i) = 2 * h^2;
+    r(i) = f(x(i), x(i) - 1) * h ^ 2;
   end
   %{
   B
