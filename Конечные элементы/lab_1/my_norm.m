@@ -9,7 +9,7 @@ function y = my_norm(v, x, u, is_diff)
     else
       my_f = @(y) (my_diff(u, k, b, y));
     endif
-    normL2(j) =  integral(my_f, x(j), x(j+1), 'RelTol', 0, 'AbsTol', 10e-12); 
+    normL2(j) =  quadv(my_f, x(j), x(j+1)); 
     normL2sum = normL2sum + normL2(j);
   endfor
   bar(normL2);
