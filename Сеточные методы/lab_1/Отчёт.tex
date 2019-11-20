@@ -145,7 +145,7 @@ $$
 
 Стоит обратить внимание на аппроксимацию на краях отрезка, для них используется другие шаблоны аппроксимации:
 $$
-\omega_h(x_0) = \{ x_{0}; x_{0 + 1}; x_{0 + 2}\}
+\omega_h(x_0) = \{ x_{0}; x_{1}; x_{2}\}
 $$
 
 $$
@@ -220,7 +220,7 @@ $$
 $$
 Тогда :
 $$
-u_x = \dfrac{u_{i + 1} + u_{i}}{h^2}
+u_x = \dfrac{u_{i + 1} - u_{i}}{h}
 $$
 
 Проводя аналогичные предыдущему пункту рассуждения, перейдем от исходной задачи к разностной схеме. В этом случае, так как нам требуется точность всего лишь O(h), то условия на границах можно аппроксимировать чуть более простой разностной схемой с тем же шаблоном, что используется для аппроксимации первой производной.
@@ -319,14 +319,14 @@ $$
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.65]{h2_20.jpg} 
+\includegraphics[scale = 0.6]{h2_20.jpg} 
 \end{center}
 \caption{Разностная схема $O(h^2), n = 20$ }
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.65]{h2_100.jpg} 
+\includegraphics[scale = 0.6]{h2_100.jpg} 
 \end{center}
 \caption{Разностная схема $O(h^2), n = 100$ }
 \end{figure}
@@ -386,14 +386,14 @@ $$
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.65]{h1_20.jpg} 
+\includegraphics[scale = 0.6]{h1_20.jpg} 
 \end{center}
 \caption{Разностная схема $O(h), n = 20$ }
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale = 0.65]{h1_100.jpg} 
+\includegraphics[scale = 0.6]{h1_100.jpg} 
 \end{center}
 \caption{Разностная схема $O(h), n = 100$}
 \end{figure}
@@ -437,9 +437,9 @@ $$
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=\linewidth]{loglog2.jpg} 
+\includegraphics[width=\linewidth]{loglog.jpg} 
 \end{center}
-\caption{$O(h^2)$}
+\caption{Графики зависимости логарифма погрешности от логарифма шага для двух разностных схем}
 \end{figure}
 
 \pagebreak
