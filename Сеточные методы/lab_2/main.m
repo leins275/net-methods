@@ -4,11 +4,16 @@ clear;
 %  setting up problem
 a = 0.5; %  edges of intervalq
 b = 2;
-N = 10;
 
-% y = explicit(a, b, N);
-% y = implicit(a, b, N);
+N = 10
+
+%disp('explicit:');
+%y = explicit(a, b, N);
+%disp('implicit:');
+%y = implicit(a, b, N);
+disp('symmetric:');
 y = symmetric(a, b, N);
+
 x = x_grid(a, b, N);
 h = (b - a) / N;
 step = 0.999 .* ( h.^2 / 2 );
