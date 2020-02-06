@@ -1,3 +1,4 @@
 function y = q(x)
-  y = sin(x);
+  y = abs(sin(x));
+  % y = 1;
   

@@ -1,17 +1,16 @@
-function res = explicit(a, b, T, N)
+function res = explicit(a, b, N)
   h = (b - a) / N;
   t = 0.999 .* ( h.^2 / 2 );
   x = x_grid(a, b, N);
   d = 0.1;
   
-  %  задаём начальные и граничные условия
+  %  задаём начальные условия
   for i = 1: N + 1
     y(i, 1) = u(x(i), 0);
   endfor
   
   %  сама схема, заполняем внутренние точки
   n = 2;
-  K = 2;
   while true
     for i = 1:N+1
       if i == 1
@@ -25,13 +24,10 @@ function res = explicit(a, b, T, N)
       n1(i) = abs(u(x(i), (n-1)*t) - sin(e^x(i)));
       n2(i) = sin(e^x(i));
     endfor
-    
     if norm(n1, h, N) / norm(n2, h, N) < d
       break;
     endif
-    
     n += 1;
-    K += 1;
   endwhile
   
   res = y;
