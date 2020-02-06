@@ -7,12 +7,12 @@ b = 2;
 
 N = 10
 
-%disp('explicit:');
-%y = explicit(a, b, N);
+disp('explicit:');
+y = explicit(a, b, N);
 %disp('implicit:');
 %y = implicit(a, b, N);
-disp('symmetric:');
-y = symmetric(a, b, N);
+%disp('symmetric:');
+%y = symmetric(a, b, N);
 
 x = x_grid(a, b, N);
 h = (b - a) / N;
