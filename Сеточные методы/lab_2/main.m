@@ -4,11 +4,11 @@ clear;
 %  setting up problem
 a = 0.5; %  edges of intervalq
 b = 2;
-
+d = 0.01;
 N = 10
 
 disp('explicit:');
-y = explicit(a, b, N);
+y = explicit(a, b, N, d);
 %disp('implicit:');
 %y = implicit(a, b, N);
 %disp('symmetric:');

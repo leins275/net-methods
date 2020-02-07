@@ -8,11 +8,11 @@ function res = eps(K, N, x, y, step, h)
   delta = 0;
   max_u = 0;
   for n = 1:K
-    if delta < norm(delta_i(2:10, n), h, N);
-    delta = norm(delta_i(2:10,n), h, N);
+    if delta < norm(delta_i(2:N, n), h, N);
+    delta = norm(delta_i(2:N,n), h, N);
   endif
-  if max_u < norm(u_i(2:10,n), h, N);
-    max_u = norm(u_i(2:10,n), h, N);
+  if max_u < norm(u_i(2:N,n), h, N);
+    max_u = norm(u_i(2:N,n), h, N);
   endif  
   endfor
   

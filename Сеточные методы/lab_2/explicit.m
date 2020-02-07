@@ -1,8 +1,7 @@
-function res = explicit(a, b, N)
+function res = explicit(a, b, N, d)
   h = (b - a) / N;
   t = 0.999 .* ( h.^2 / 2 );
   x = x_grid(a, b, N);
-  d = 0.1;
   
   %  задаём начальные условия
   for i = 1: N + 1
@@ -14,9 +13,13 @@ function res = explicit(a, b, N)
   while true
     for i = 1:N+1
       if i == 1
-        y(i, n) = mu_a((n-1)*t, a) + (u(a+h, (n-1)*t)-u(a-h, (n-1)*t))/(2*h);
+        %y(i, n) = u(x(i), t*(n-1));
+        tmp = (-3*y(i, n-1) +4*y(i+1,n-1) - y(i+2,n-1)) / 2*h;
+        y(i, n) = mu_a((n-1)*t, a) + tmp;
       elseif i == N+1
-        y(i, n) = mu_b((n-1)*t, b) - (u(b+h, (n-1)*t)-u(b-h, (n-1)*t))/(2*h);
+        %y(i, n) = u(x(i), t*(n-1));
+        tmp = (3*y(i, n-1) -4*y(i-1,n-1) + y(i-2,n-1)) / 2*h;
+        y(i, n) = mu_b((n-1)*t, b) - tmp;
       else
         tmp = (y(i+1, n-1) - 2.*y(i,n-1) + y(i-1,n-1)) / h.^2;
         y(i, n) = y(i, n - 1) + t .* (f(x(i), (n-1)*t) + q(x(i)).*tmp);
