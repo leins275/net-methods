@@ -1,19 +1,14 @@
-function res = eps(K, N, x, y, step, h)
-  for n = 1:K
-    for i = 1:N + 1
-      delta_i(i, n) = abs(y(i, n) - u(x(i), (n-1)*step));
-      u_i(i, n) = abs(u(x(i), (n-1)*step));
+function res = eps(N, x, y, t, h)
+  for n = 1:length(t)
+    for i = 1:length(x)
+      n1(i, n) = abs(y(i, n) - u(x(i), t(n)));
+      n2(i, n) = abs(u(x(i), t(n)));
     endfor
-  endfor
-  delta = 0;
-  max_u = 0;
-  for n = 1:K
-    if delta < norm(delta_i(2:N, n), h, N);
-    delta = norm(delta_i(2:N,n), h, N);
-  endif
-  if max_u < norm(u_i(2:N,n), h, N);
-    max_u = norm(u_i(2:N,n), h, N);
-  endif  
+    n1_norm(n) = norm(n1(:, n),h,length(x));
+    n2_norm(n) = norm(n2(:, n),h,length(x));
   endfor
   
-  res = delta / max_u;
+  n1_max = max(n1_norm);
+  n2_max = max(n2_norm);
+  
+  res = n1_max / n2_max;

@@ -1,2 +1,3 @@
 function y = f(x, t)
-  y = dudt(x, t) - q(x) .* d2u(x, t);
+  y = sin(e.^x) .*x .* (-3) .* e .^ (-3.*t) - ...
+     q(x).*( 2.*e.^(-3.*t+x).*cos(e.^x) + e.^x.*(cos(e.^x) - e.^x .* sin(e.^x)));

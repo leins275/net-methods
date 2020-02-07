@@ -1,4 +1,3 @@
 function y = q(x)
-  % y = sin(x);
-  y = 1;
+  y = x * 1e-2 + 0.02;
   
