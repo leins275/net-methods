@@ -6,18 +6,26 @@ a = 0.5;
 b = 2;
 E = 1e-3;
 d = E * 0.1;
-N = 1000
-tic
-disp('explicit:');
-[x, y, h, t] = explicit(a, b, N, d, E);
-%disp('implicit:');
-%y = implicit(a, b, N);
-%disp('symmetric:');
-%y = symmetric(a, b, N);
+N = 10000;
 
-toc
-epsilon = eps(N, x, y, t, h)
-toc
+%while true
+  tic
+  E
+  N
+  disp('explicit:');
+  [x, y, h, t, epsilon] = explicit(a, b, N, d);
+  %disp('implicit:');
+  %y = implicit(a, b, N);
+  %disp('symmetric:');
+  %y = symmetric(a, b, N);
+  toc
+  
+  epsilon
+ % if epsilon <= E
+  %  break;
+  %endif
+  %N *= 2;
+%endwhile
 
 %  график
 figure;
