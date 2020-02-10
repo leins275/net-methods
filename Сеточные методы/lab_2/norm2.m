@@ -1,4 +1,4 @@
-function y = norm(x, h, n)
+function y = norm2(x, h)
   sum = 0;
   
   for i=2:length(x)-1

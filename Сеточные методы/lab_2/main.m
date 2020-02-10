@@ -1,31 +1,31 @@
 clear;
-
 %%
 %  Задание параметров
 a = 0.5; 
 b = 2;
-E = 1e-3;
+E = 1e-2; %  1у-3
 d = E * 0.1;
-N = 10000;
+N = 10; %  40000
 
+fprintf('E: %d \n\n', E);
 %while true
   tic
-  E
-  N
-  disp('explicit:');
-  [x, y, h, t, epsilon] = explicit(a, b, N, d);
+  fprintf('N: %d \n', N);
+  
+  %disp('explicit:');
+  %[x, y, h, t, epsilon] = explicit(a, b, N, d);
   %disp('implicit:');
-  %y = implicit(a, b, N);
-  %disp('symmetric:');
-  %y = symmetric(a, b, N);
+  %[x, y, h, t, epsilon] = implicit(a, b, N, 1);
+  disp('symmetric:');
+  [x, y, h, t, epsilon] = implicit(a, b, N, 0.5);
   toc
   
-  epsilon
- % if epsilon <= E
-  %  break;
-  %endif
-  %N *= 2;
-%endwhile
+  fprintf('epsilon: %d \n\n', epsilon);
+%  if epsilon <= E
+%    break;
+%  end
+%  N = N * 2;
+%end
 
 %  график
 figure;

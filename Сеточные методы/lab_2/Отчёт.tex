@@ -96,8 +96,8 @@
 
 $$
 \begin{cases}
-\dfrac{du}{dt} + \rho(x)\dfrac{d^2u}{dx^2} = f(x, t), & x \in [0.5;2],  t \in [0, T] \\ \\
-0 < \rho_{min} < \rho(x) < \rho_{max}, & \rho(x) = sin(x) \\ \\
+\dfrac{du}{dt} - \rho(x)\dfrac{d^2u}{dx^2} = f(x, t), & x \in [0.5;2],  t \in [0, T] \\ \\
+0 < \rho_{min} < \rho(x) < \rho_{max}, & \rho(x) = (x+1)*10^{-7} \\ \\
  - \dfrac{du}{dx}(0.5) + u(0.5) = \mu_1(t) \\ \\
 \dfrac{du}{dx}(2) + u(2) = \mu_2(t)
 \end{cases}

@@ -1,2 +1,2 @@
 function y = du(x, t)
-  y = ((e.^(-3.*t)).*sin(e.^x) + (e.^x).*cos(e.^x).*(x.*e.^(-3.*t) + 1));
+  y = ((exp(-3.*t)).*sin(exp(x)) + (exp(x)).*cos(exp(x)).*(x.*exp(-3.*t) + 1));
