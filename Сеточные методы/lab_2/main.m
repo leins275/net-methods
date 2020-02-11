@@ -45,7 +45,7 @@ while true
 end
 %}
 
-N = 10;% 126502;
+N = 20;% 126502;
 tic
 [x, y, h, t, epsilon] = implicit(a, b, N, d, 1);
 toc

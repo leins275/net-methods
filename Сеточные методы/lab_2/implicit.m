@@ -23,17 +23,6 @@ function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
   for n = 2:K+1 
     b1(1) = 0;
     d1(N+1) = 0;
-    d1(1) = ts * q(x(2))* sigma / h^2;
-    b1(N+1) = ts * q(x(N))* sigma / h^2;  
-    
-    %  граничные условия
-    c1(1) = 3 + 2 * h;
-    b1(2) = -4;
-    c1(N+1) = 3 + 2 * h;
-    d1(N) = -4;
-    r1(1) = mu_a(t(n), a) * 2 * h;
-    r1(N+1) = mu_b(t(n), b) * 2 * h;
-    
     for i = 2:N
       %  заполняем матицу для прогонки  
       gamma = ts * q(x(i)) * sigma / h^2;
@@ -41,16 +30,19 @@ function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
       c1(i) = -1-2*gamma;
       d1(i-1) = gamma;
       tmp = (y(i+1, n-1) - 2.*y(i,n-1) + y(i-1,n-1)) / h.^2;
-      r1(i) = -(y(i, n-1) + ts*(f(x(i), t(n-1)) + q(x(i))*(1-sigma)*tmp));
-    end
-    %  приводим матрицу к диагональному виду
-    c1(1) = c1(1) + d1(1) * (-1/b1(3));
-    b1(2) = b1(2) + c1(2) * (-1/b1(3));
-    r1(1) = r1(1) + r1(2) * (-1/b1(3));
+      r1(i) = -(y(i, n-1) + ts*(f(x(i), t(n-1) + (1-sigma)*ts) + ...
+          q(x(i))*(1-sigma)*tmp));
+    end    
+    %  граничные условия
+    gamma = ts * q(x(2)) * sigma / h^2;
+    c1(1) = (3/(2*h)+1) - 1/(2*h);
+    b1(2) = -2/h + (1+2*gamma)/(2*h*gamma);
+    r1(1) = mu_a(t(n), a) - r1(2) * (1/(2*h*gamma));
     
-    d1(N) = d1(N) + c1(N) * (-1/d1(N-1));
-    c1(N+1) = c1(N+1) + b1(N+1) * (-1/d1(N-1));
-    r1(N+1) = r1(N+1) + r1(N) * (-1/d1(N-1));
+    gamma = ts * q(x(N)) * sigma / h^2;
+    c1(N+1) = (3/(2*h)+1) - 1/(2*h);
+    d1(N) = -2/h + (1+2*gamma)/(2*h*gamma);
+    r1(N+1) = mu_b(t(n), b) - r1(N) * (1/(2*h*gamma));
     
     yn = TrDiagMatrSolve(b1, c1, d1, r1);
     for i=1:N+1

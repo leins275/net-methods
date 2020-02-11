@@ -1,4 +1,5 @@
 function y = norm2(x, h)
+  %{
   sum = 0;
   
   for i=2:length(x)-1
@@ -6,4 +7,5 @@ function y = norm2(x, h)
   end
   
   y = sqrt(sum);
-
+  %}
+  y = max(x);
