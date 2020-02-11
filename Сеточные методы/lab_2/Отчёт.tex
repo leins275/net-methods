@@ -98,7 +98,7 @@
 $$
 \begin{cases}
 \dfrac{du}{dt} - \rho(x)\dfrac{d^2u}{dx^2} = f(x, t), & x \in [0.5;2],  t \in [0, T] \\ \\
-0 < \rho_{min} < \rho(x) < \rho_{max}, & \rho(x) = (x+1)*10^{-7} \\ \\
+0 < \rho_{min} < \rho(x) < \rho_{max}, & \rho(x) = (x+1)*10^{-8} \\ \\
  - \dfrac{du}{dx}(0.5) + u(0.5) = \mu_1(t) \\ \\
 \dfrac{du}{dx}(2) + u(2) = \mu_2(t) \\ \\
 u(x, 0) = \phi(x)
@@ -126,6 +126,10 @@ $$
 
 
 \section{Разностные схемы}
+При построении сетки по $t$ будем выбирать T из условия:
+$$
+\dfrac{||u(x, T) - u_{st}(x)||}{||u_{st}(x)||} \leq \delta, \delta = 0.1 \varepsilon_0
+$$
 \subsection{Явная схема}
 Для начала введём сетки по $x$ и по $t$ соответственно.
 $$
@@ -205,6 +209,61 @@ $$
 
 \section{Результаты}
 \subsection{Явная схема}
+\begin{enumerate}
+\item Определение числа разбиений для достижения заданной точности \\
+Требуемая точность $\varepsilon = 10^{-3}$
+
+\begin{table}[H]
+\caption{Зависимость погрешности от числа разбиений по $x$ }
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$N$ & $\varepsilon_N$   \\
+\hline
+120000 &   1.111578e-03\\
+\hline
+125000 & 1.024222e-03  \\
+\hline
+126250 &  1.003994e-03 \\
+\hline
+126493 & 1.000131e-03  \\
+\hline
+126498 &  1.000052e-03 \\
+\hline
+126406 & 1.001511e-03  \\
+\hline
+126484 & 1.000274e-03  \\
+\hline
+126562 & 9.990385e-04  \\
+\hline
+126523 &  9.996558e-04 \\
+\hline
+126502 &  9.999726e-04 \\
+\hline
+126501 & 1.000004e-03  \\
+\hline
+126500 &  1.000020e-03 \\
+\hline
+126875 &  9.941040e-04 \\
+\hline
+127500 &  9.843598e-04 \\
+\hline
+130000 &  9.467826e-04 \\
+\hline
+
+\end{tabular}
+\end{center}
+\end{table}
+
+Где $\varepsilon$ вычисляется по формуле
+
+$$
+\varepsilon = \dfrac{||u -v||_{h\tau}}{||u||_{h\tau}},  ||u||_{h\tau} = max||u(t)||_h
+$$
+
+\item График зависимости значений сеточной функции от $x$ и $t$
+ 
+\end{enumerate}
 \subsection{Неявная схема}
 \subsection{Симметричная схема}
 \subsection{Сравнение трудоёмкости схем}

@@ -1,8 +1,8 @@
-function [x, res, h, t, epsilon] = implicit(a, b, N, sigma)
+function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
   h = (b - a) / N;
-  ts = h ^ 2;
+  ts = h^2 / (2 * q(b));
   x = a:h:b;
-  [t, K] = t_grid(ts, N, 0.1, x, h);
+  [t, K] = t_grid(ts, N, d, x, h);
   
   y = zeros(N+1, K+1);
   %  задаём начальные условия
@@ -23,8 +23,8 @@ function [x, res, h, t, epsilon] = implicit(a, b, N, sigma)
   for n = 2:K+1 
     b1(1) = 0;
     d1(N+1) = 0;
-    d1(1) = ts * q(x(2)) / h^2;
-    b1(N+1) = ts * q(x(N)) / h^2;  
+    d1(1) = ts * q(x(2))* sigma / h^2;
+    b1(N+1) = ts * q(x(N))* sigma / h^2;  
     
     %  граничные условия
     c1(1) = 3 + 2 * h;
@@ -36,7 +36,7 @@ function [x, res, h, t, epsilon] = implicit(a, b, N, sigma)
     
     for i = 2:N
       %  заполняем матицу для прогонки  
-      gamma = (ts * q(x(i))*sigma / h^2);
+      gamma = ts * q(x(i)) * sigma / h^2;
       b1(i+1) = gamma;
       c1(i) = -1-2*gamma;
       d1(i-1) = gamma;
