@@ -1,3 +1,31 @@
+%{
+figure;
+grid on;
+% [T, X] = meshgrid(t(1:50:length(t)), x(1:100:length(x)));
+[T, X] = meshgrid(t, x);
+y1 = y(1:100:length(x), 1:50:length(t));
+plot3(X, T, y);
+%}
+
+
+i = 2;
+figure;
+grid on;
+hold on;
+plot(x, y(:, i));
+plot(x, u(x, t(i)), '-r')
+
+%{
+for i=1:100:length(t)
+    figure;
+    grid on;
+    hold on;
+    plot(x, y(:, i));
+    plot(x, u(x, t(i)), '-r')
+end
+%}
+
+%{
 gf_loglog = figure(5);
 hold on;
 grid on;
@@ -64,4 +92,4 @@ print(gf_1_100, "pic/h1_100",'-djpg');
 print(gf_2_20, "pic/h2_20",'-djpg');
 print(gf_2_100, "pic/h2_100",'-djpg');
 print(gf_loglog, "pic/loglog",'-djpg');
-
+%}

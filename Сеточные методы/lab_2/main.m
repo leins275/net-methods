@@ -1,4 +1,4 @@
-%%
+clear;
 %  Задание параметров
 a = 0.5; 
 b = 2;
@@ -45,22 +45,14 @@ while true
 end
 %}
 
-N = 20;% 126502;
+N = 10;% 126502;
 tic
+%[x, y, h, t, epsilon] = explicit(a, b, N, d);
 [x, y, h, t, epsilon] = implicit(a, b, N, d, 1);
+fprintf("tau:%d, h:%d, N:%d, eps:%d\n", t(2) - t(1), h, N, epsilon);
 toc
 
-% график
-figure;
-set(gca,'FontSize',20);
-grid on;
-% [T, X] = meshgrid(t(1:50:length(t)), x(1:100:length(x)));
-[T, X] = meshgrid(t, x);
-y1 = y(1:100:length(x), 1:50:length(t));
-plot3(X, T, y);
-xlabel('x');
-ylabel('t');
-zlabel('v');
+
 
 
 
