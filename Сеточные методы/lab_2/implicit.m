@@ -1,8 +1,8 @@
 function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
   h = (b - a) / N;
-  ts = h^2 / (2 * q(b));
+  ts = max(h, h^2 / (2 * q(b)));
   x = a:h:b;
-  [t, K] = t_grid(ts, N, d, x, h);
+  [t, K] = t_grid(ts, N, d, x);
   y = zeros(N+1, K+1);
   for i = 1: N + 1
     y(i, 1) = u(x(i), 0);
@@ -11,12 +11,11 @@ function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
   n2 = zeros(N+1, 1);
   n1_norm = zeros(K, 1);
   n2_norm = zeros(K, 1);
-  
+  B = zeros(1, N+1);
+  C = zeros(1, N+1);
+  D = zeros(1, N+1);
+  R = zeros(1, N+1);
   for n = 2:K+1
-    B = zeros(1, N+1);
-    C = zeros(1, N+1);
-    D = zeros(1, N+1);
-    R = zeros(1, N+1);
     for i = 2:N
       gamma = ts * q(x(i)) / h^2;
       D(i-1) = gamma;

@@ -3,9 +3,10 @@ figure;
 grid on;
 % [T, X] = meshgrid(t(1:50:length(t)), x(1:100:length(x)));
 [T, X] = meshgrid(t, x);
-y1 = y(1:100:length(x), 1:50:length(t));
+% y1 = y(1:100:length(x), 1:50:length(t));
 plot3(X, T, y);
 
+%{
 i = 100;
 figure;
 grid on;
@@ -18,6 +19,7 @@ ylabel('v(x, t)');
 s = sprintf('t = %d', i);
 title(s)
 legend('v(x, t)', 'u(x, t)');
+%}
 
 %{
 for i=1:100:length(t)
