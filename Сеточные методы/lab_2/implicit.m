@@ -1,6 +1,6 @@
 function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
   h = (b - a) / N;
-  ts = min(h, h^2 / (2 * q(b)));
+  ts = h^2 / (2 * q(b));
   x = a:h:b;
   [t, K] = t_grid(ts, N, d, x, h);
   y = zeros(N+1, K+1);
@@ -9,16 +9,14 @@ function [x, res, h, t, epsilon] = implicit(a, b, N, d, sigma)
   end
   n1 = zeros(N+1, 1);
   n2 = zeros(N+1, 1);
-  B = zeros(1, N+1);
-  C = zeros(1, N+1);
-  D = zeros(1, N+1);
-  R = zeros(N+1, 1);
   n1_norm = zeros(K, 1);
   n2_norm = zeros(K, 1);
   
   for n = 2:K+1
-    B(1) = 0;
-    D(N+1) = 0;
+    B = zeros(1, N+1);
+    C = zeros(1, N+1);
+    D = zeros(1, N+1);
+    R = zeros(1, N+1);
     for i = 2:N
       gamma = ts * q(x(i)) / h^2;
       D(i-1) = gamma;

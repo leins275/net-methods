@@ -1,19 +1,23 @@
-%{
+
 figure;
 grid on;
 % [T, X] = meshgrid(t(1:50:length(t)), x(1:100:length(x)));
 [T, X] = meshgrid(t, x);
 y1 = y(1:100:length(x), 1:50:length(t));
 plot3(X, T, y);
-%}
 
-
-i = 2;
+i = 100;
 figure;
 grid on;
 hold on;
 plot(x, y(:, i));
 plot(x, u(x, t(i)), '-r')
+set(gca,'FontSize',18);
+xlabel('x');
+ylabel('v(x, t)');
+s = sprintf('t = %d', i);
+title(s)
+legend('v(x, t)', 'u(x, t)');
 
 %{
 for i=1:100:length(t)
