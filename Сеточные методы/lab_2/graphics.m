@@ -8,12 +8,11 @@ figure;
 grid on;
 hold on;
 plot(x, y(:, i));
-plot(x, u(x, t(i)), '-r')
+plot(x, u(x, t(i)), '-r');
 set(gca,'FontSize',18);
 xlabel('x');
 ylabel('v(x, t)');
-s = sprintf('t = %d', i);
-title(s)
+title(sprintf('t = %d', i));
 legend('v(x, t)', 'u(x, t)');
 %}
 

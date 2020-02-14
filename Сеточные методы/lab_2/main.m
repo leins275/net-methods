@@ -4,10 +4,10 @@ a = 0.5;
 b = 2;
 E = 1e-3; 
 d = E * 0.1;
-N = 1000;% 126502;
+N = 30; % 126502;
 
 tic
-[x, y, h, t, epsilon] = explicit(a, b, N, d);
+[x, y, h, t, epsilon] = implicit(a, b, N, d, 1);
 fprintf("tau:%d, h:%d, N:%d, eps:%d\n", t(2) - t(1), h, N, epsilon);
 toc
 
