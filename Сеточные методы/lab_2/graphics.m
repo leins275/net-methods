@@ -1,9 +1,28 @@
-y1 = y(1:50:length(x), :);
+t_1 = 1000:9:1701;
+y1 = y(1:50:length(x), t_1);
 x1 = x(1:50:length(x));
 
-%figure;
-%[T, X] = meshgrid(t, x1);
-%plot3(X, T, y1);
+figure;
+[T, X] = meshgrid(t(t_1), x1);
+plot3(X, T, y1);
+
+
+x_1 = [1995, 1997, 1998, 2001];
+t1 = t(t_1);
+for i=1:4
+    figure;
+    grid on;
+    hold on;
+    plot(t(t_1), y1(x_1(i), :));
+    plot(t(t_1), u(x1(x_1(i)), t1));
+    set(gca,'FontSize',14);
+    xlabel('t');
+    ylabel('v(x, t)');
+    legend({'v(x,t)', 'u(x,t)'});
+    legend('boxoff');
+    saveas(gcf, sprintf('pic/instable_x=%d', x_1(i)), 'epsc');
+end
+
 
 %{
 figure;
@@ -33,7 +52,7 @@ saveas(gcf, sprintf('pic/epstausym'), 'epsc');
 %}
 
 
-for i=1:20:281 % 654
+for i=1500:10:1701 % 654
     figure;
     grid on;
     hold on;
@@ -45,6 +64,6 @@ for i=1:20:281 % 654
     ylabel('v(x, t)');
     legend({'v(x,t)', 'u(x,t)'}, 'Location', 'southwest');
     legend('boxoff');
-    
+    %saveas(gcf, sprintf('pic/exp_d_t=%d', i), 'epsc');
 end
 

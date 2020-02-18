@@ -3,7 +3,7 @@ a = 0.5;
 b = 2;
 E = 1e-3; 
 d = E * 0.1;
-N = 40000; %136984;
+N = 100000; %136984;
 
 %{
 tic
@@ -65,10 +65,6 @@ while true
     end
 end
 %}
-%load('implicit.mat');
-%save('implicit.mat');
-%save('tsm.txt', 'tsm', '-ascii');
-%save('epsm.txt', 'epsm', '-ascii');
 
 %{
 %  поиск M_0 методом половинного деления в явной схеме
@@ -104,6 +100,7 @@ while true
   end
 end
 %}
+
 
 
 

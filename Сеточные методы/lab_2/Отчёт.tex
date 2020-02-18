@@ -326,26 +326,26 @@ $$
 
 \item{Иллюстрация неустойчивости}
 
-Возьмём $\tau = \tau_0 + \delta, \delta = 5.8e-6$ Ипостроим аналогичные графики сечений.
+Возьмём $\tau = \tau_0 + \delta, \delta = 1.85e-5$ и число разбиений по $x$ $N = 10000$. Построим аналогичные графики сечений, только теперь сечения по оси $x$. Неустойчивость явно проявляется ближе к правой границе по $x$, соответственно будем рассматривать сечения в окрестности этой границы.
 
 \begin{figure}[H]
-\centerline{\includegraphics[scale = 0.7]{exp_d_t=2870.eps}}
-\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, t = 2870$}
+\centerline{\includegraphics[scale = 0.7]{instable_x=1995.eps}}
+\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, x_{ind} = 1995$}
 \end{figure} 
 
 \begin{figure}[H]
-\centerline{\includegraphics[scale = 0.7]{exp_d_t=2970.eps}}
-\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, t = 2970$}
+\centerline{\includegraphics[scale = 0.7]{instable_x=1997.eps}}
+\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, x_{ind} = 1997$}
 \end{figure} 
 
 \begin{figure}[H]
-\centerline{\includegraphics[scale = 0.7]{exp_d_t=3070.eps}}
-\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, t = 3070$}
+\centerline{\includegraphics[scale = 0.7]{instable_x=1998.eps}}
+\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, x_{ind} = 1998$}
 \end{figure} 
 
 \begin{figure}[H]
-\centerline{\includegraphics[scale = 0.7]{exp_d_t=3170.eps}}
-\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, t = 3170$}
+\centerline{\includegraphics[scale = 0.7]{instable_x=2001.eps}}
+\caption{Явная схема, неустойчивость,$h_0 = \dfrac{1.5}{M_0}, \tau, x_{ind} = 2001$}
 \end{figure} 
 
 По графикам легко заметить, что функции перестали совпадать совершенно. Даже при малейшем  увеличении максимально доступного из условия устойчивости $\tau$, ошибка возрастает колоссально. Для данного конкретного $\tau: \varepsilon_{\tau} = 1.452027e+220$
@@ -382,9 +382,7 @@ $$
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-\multirow{2}{*}{$h$} & \multirow{2}{*}{$tau$} & Явная схема & Неявная схема &Симметричная схема  \\
-\cline{3-5}
-& & $\varepsilon$ & $\varepsilon$ & $\varepsilon$  \\
+$h$ & $tau$ & $\varepsilon$, Явная схема & $\varepsilon$, Неявная схема & $\varepsilon$, Симметричная схема  \\
 \hline
 6e-4 & 3 & 1.426942e+1 & 1.779575 & 1.604145 \\
 \hline
@@ -405,7 +403,7 @@ $$
 \end{table}
 
 \begin{table}[H]
-\caption{Оценка трудоёмкости разностных сехм по времени работы}
+\caption{Оценка трудоёмкости разностных схем по времени работы}
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
