@@ -1,6 +1,6 @@
 function [x, res, h, t, epsilon] = explicit(a, b, N, d)
   h = (b - a) / N;
-  ts = h^2 / (2 * q(b));
+  ts = h^2 / (2 * q(b)) + 5.6e-4;
   x = a:h:b;
   [t, K] = t_grid(ts, N, d, x);
   
