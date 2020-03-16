@@ -1,7 +1,8 @@
-function [start, stop, u, q, a, b, f] = setup_problem()
-    start = 1;
-    stop = 10;
-    u = @(x, y) cos(2 * x) * exp(-3 * y );
+function [u, q, a, b, f, x, y] = problem(N, M)
+    x = linspace(1, 10, N);
+    y = linspace(-1, 1, M);
+    
+    u = @(x, y) cos(2 .* x) .* exp(-3 .* y );
     q = @(x, y) x^4 * exp(y);
     a = @(x, y) x^2 + y^2;
     b = @(x, y) 1 / (x + y);
