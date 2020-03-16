@@ -1,8 +1,8 @@
 clear;
 
 % setup the task
-N = 10; 
-M = 10;
+N = 5; 
+M = 5;
 [u, q, a, b, f, x, y] = problem2(N, M);
 
 U = um(x, y, u);
@@ -13,7 +13,7 @@ graphics(x, y, U);
 [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f, u);
 
 % solve 
-Eps = 1e-3;
+Eps = 1e-1;
 v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u);
 
 graphics(x, y, v);

@@ -23,13 +23,7 @@ function v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u)
             break;
         end
         
-        [v0, v1] = swap(v0, v1);
+        v0 = v1;
     end
     v = v1;
-end
-
-function [v0, v1] = swap(v0, v1)
-    tmp = v0;
-    v0 = v1;
-    v1 = tmp;
 end
