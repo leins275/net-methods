@@ -2,8 +2,8 @@ clear;
 
 % setup the task
 N = 8; 
-M = 6;
-[u, q, a, b, f, x, y] = problem3(N, M);
+M = 8;
+[u, q, a, b, f, x, y] = problem4(N, M);
 
 U = um(x, y, u);
 graphics(x, y, U, 'origin');
@@ -13,7 +13,7 @@ graphics(x, y, U, 'origin');
 [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
 
 % solve 
-Eps = 1e-3;
+Eps = 1e-9;
 v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u);
 
 graphics(x, y, v, 'approximation');

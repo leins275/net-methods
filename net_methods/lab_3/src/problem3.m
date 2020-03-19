@@ -1,6 +1,6 @@
 function [u, q, a, b, f, x, y] = problem3(N, M)
-    x = linspace(-5, 5, N);
-    y = linspace(-5, 5, M);
+    x = linspace(0, 5, N);
+    y = linspace(0, 5, M);
     
     u = @(x, y) x.^2/4 * y.^2/6;
     q = @(x, y) 0;

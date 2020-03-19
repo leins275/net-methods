@@ -14,8 +14,8 @@ function v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u)
         for i = 2:N-1
             for j = 2:M-1
                 v1(i, j) =  (G(i, j) - ...
-                  - C(i, j)*v0(i, j-1) - D(i, j)*v0(i-1, j) - ...
-                  - B(i, j)*v0(i+1, j) - E(i, j)*v0(i, j+1)) / A(i, j);
+                  C(i, j)*v0(i, j-1) - D(i, j)*v0(i-1, j) - ...
+                  B(i, j)*v0(i+1, j) - E(i, j)*v0(i, j+1)) / A(i, j);
             end
         end
         
