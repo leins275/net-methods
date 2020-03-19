@@ -1,23 +1,22 @@
 clear;
 
 % setup the task
-N = 8; 
-M = 8;
-[u, q, a, b, f, x, y] = problem4(N, M);
+N = 10; 
+M = 300;
+[u, q, a, b, f, x, y] = problem(N, M);
 
 U = um(x, y, u);
 graphics(x, y, U, 'origin');
-
 
 % calculate coefs with fvm method
 [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
 
 % solve 
-Eps = 1e-9;
-v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u);
+epsIter = 1e-9;
+v = jacobi(N, M, A, B, C, D, E, G, epsIter, x, y, u);
 
 graphics(x, y, v, 'approximation');
-fprintf("%d \n", max(max(abs(U - v))));
+fprintf("||u - v|| = %d \n", max(max(abs(U - v))));
 
 function u = um(x, y, f)
     M = length(y);
