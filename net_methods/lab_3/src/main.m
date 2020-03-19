@@ -1,24 +1,23 @@
 clear;
 
 % setup the task
-N = 5; 
-M = 5;
-[u, q, a, b, f, x, y] = problem2(N, M);
+N = 16; 
+M = 16;
+[u, q, a, b, f, x, y] = problem3(N, M);
 
 U = um(x, y, u);
-graphics(x, y, U);
+graphics(x, y, U, 'origin');
 
 
 % calculate coefs with fvm method
-[A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f, u);
+[A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
 
 % solve 
-Eps = 1e-1;
+Eps = 1e-9;
 v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u);
 
-graphics(x, y, v);
+graphics(x, y, v, 'approximation');
 fprintf("%d \n", max(max(abs(U - v))));
-
 
 function u = um(x, y, f)
     M = length(y);

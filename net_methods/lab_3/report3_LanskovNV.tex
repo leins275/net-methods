@@ -1,0 +1,119 @@
+%%%
+% set up document type
+%%%
+\documentclass[12pt]{article}
+
+%%%
+% declare all packages
+%%%
+\usepackage[left=25mm, top=20mm, right=25mm, bottom=30mm,nohead,nofoot]{geometry} 
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+
+\usepackage{graphics, graphicx}
+
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{amssymb,latexsym} 
+\usepackage{MnSymbol}
+\usepackage{mathrsfs}
+
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{delarray}
+
+\usepackage{color,colortbl}
+
+% \usepackage{verbatim}
+%%%
+% document settings
+%%%
+\setcounter{tocdepth}{4}
+\graphicspath{ {./pic/} }
+
+\renewcommand{\listoffigures}{\begingroup  % add number to list of graphics
+\tocsection
+\tocfile{\listfigurename}{lof}
+\endgroup}
+\renewcommand{\listoftables}{\begingroup  % add number to list of tables
+\tocsection
+\tocfile{\listtablename}{lot}
+\endgroup}
+
+%******************************************************************
+%******************************************************************
+\begin{document}
+
+\begin{titlepage}
+	\center
+		Санкт-Петербургский Политехнический 
+		университет \\ Петра Великого\\
+		Институт прикладной математики и механики
+		\\ \textbf{Высшая школа прикладной математики и вычислительной физики}
+
+	\vfill ~
+	\textbf{
+		\\ \large ЛАБОРАТОРНАЯ РАБОТА №3
+	}
+	\\	на тему 
+	\\ "Метод конечных объёмов для уравнений эллиптического типа"
+	\\ по дисциплине
+	\\ "Конечно-разностные и сеточные методы"
+
+	\vfill ~
+
+	Выполнил студент гр. \textbf{3630102/60101} \\
+	\textbf{Лансков.Н.В.} \\ 
+
+\vfill
+
+{\large}	Санкт-Петербург
+\\ 2019
+\end{titlepage}
+
+%%%
+% Table of conetnts 
+%%%
+
+\tableofcontents 
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+%%%
+% Text
+%%%
+\section{Постановка задачи}
+\section{Метод конечных объёмов}
+
+Рассмотрим  процесс нахождения коэффициентов по методу конечных объёмов.
+
+Разобъём нашу область (прямоугольник) на конечные объёмы (в узлах). Тогда для каждой внутреней точки рассматриваем конечный объём $\Omega_{ij}$. Далее приведём вычисления в общем виде для такого конечного объёма.
+
+Проинтегрируем уравнение 1 по конечному объёму и домножим на -1:
+$$
+\int\limits_{\Omega_{ij}}{\left[ \dfrac{\partial}{\partial x}\left( a\dfrac{\partial u}{\partial x}\right) + \dfrac{\partial}{\partial y}\left( b\dfrac{\partial u}{\partial y}\right) \right]}
+$$
+
+\section{Метод Якоби}
+\section{Метод Зейделя}
+\section{Метод SOR}
+\section{Результаты}
+\subsection{Метод Якоби}
+\subsection{Метод Зейделя}
+\subsection{Метод SOR}
+\subsection{Сравнение методов}
+\section{Выводы}
+\section{Приложения}
+Исходные файлы лабораторной работы можно найти тут: \\
+\url{a}
+\end{document}
+
