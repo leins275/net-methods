@@ -109,3 +109,4 @@ venv.bak/
 *.mat
 *.m~
 /m_bkup
+.directory
