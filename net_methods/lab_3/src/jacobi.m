@@ -1,5 +1,5 @@
 function v = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u)
-    v0 = zeros(N, M);
+    v0 = ones(N, M);
     for j = 1:M
         v0(1, j) = u(x(1), y(j));
         v0(N, j) = u(x(N), y(j));
