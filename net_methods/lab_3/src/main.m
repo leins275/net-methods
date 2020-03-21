@@ -1,8 +1,10 @@
 clear;
 
-%calculate(60, 60, 9e-7, @jacobi);
-%calculate(60, 60, 9e-7, @zeidel);
-calculate_sor(10, 10, 1e-5);
+N = 25;
+EPS = 1e-7;
+%calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100
+%calculate(N, N, EPS*pi^2*(1/N)^2, @zeidel); %100
+calculate_sor(N, N, 2*EPS*pi/N); % 25
 
 function um = print_u(x, y, f)
     M = length(y);
@@ -35,6 +37,7 @@ function calculate(N, M, epsIter, solver)
         y1(i) = n(i+1) / n(i);
     end
     graphics2(x1, y1, 'spectre');
+    graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
 end
 
 function calculate_sor(N, M, epsIter)
@@ -42,10 +45,12 @@ function calculate_sor(N, M, epsIter)
     [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
     U = print_u(x, y, u);
     
-    wi = zeros(1, 10);
-    ni = zeros(1, 10);
-    for i = 1:10
-        wi(i) = 1 + 0.1 * (i-1);
+    l = 114;
+    s = 150;
+    wi = zeros(1, l);
+    ni = zeros(1, l);
+    for i = 1:l
+        wi(i) = 1 + (i-1) / s;
         [v, n] = sor(N, M, A, B, C, D, E, G, epsIter, x, y, u, wi(i));
         MAX = max(max(abs(U - v)));
         fprintf("i = %d, n = %d, epsIter = %d \n", i, n, epsIter);
@@ -53,7 +58,7 @@ function calculate_sor(N, M, epsIter)
         ni(i) = n;
     end
     graphics2(wi, ni, 'sor');
-    %graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
+    %graphics3(x, y, U, sprintf("||u - v|| = %d \n", MAX));
 end
 
 function graphics2(x, y, name)

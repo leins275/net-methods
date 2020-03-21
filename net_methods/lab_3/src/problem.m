@@ -1,5 +1,5 @@
 function [u, q, a, b, f, x, y] = problem(N, M)
-    x = linspace(3, 4, N);
+    x = linspace(3, 3.4, N);
     y = linspace(1, 1.4, M);
     
     u = @(x, y) cos(2 .* x) .* exp(-3 .* y );
