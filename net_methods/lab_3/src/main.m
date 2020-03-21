@@ -1,10 +1,10 @@
 clear;
 
-N = 25;
+N = 28;
 EPS = 1e-7;
-%calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100
-%calculate(N, N, EPS*pi^2*(1/N)^2, @zeidel); %100
-calculate_sor(N, N, 2*EPS*pi/N); % 25
+%calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100 1e-4
+%calculate(N, N, EPS*pi^2*(1/N)^2, @zeidel); %100 1e-4
+%calculate_sor(N, N, EPS*pi/N); % 28, 1e-7
 
 function um = print_u(x, y, f)
     M = length(y);
@@ -45,8 +45,8 @@ function calculate_sor(N, M, epsIter)
     [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
     U = print_u(x, y, u);
     
-    l = 114;
-    s = 150;
+    l = 75;
+    s = 100;
     wi = zeros(1, l);
     ni = zeros(1, l);
     for i = 1:l
