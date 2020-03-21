@@ -1,4 +1,4 @@
-function v = zeidel(N, M, A, B, C, D, E, G, Eps, x, y, u)
+function [v, norms] = zeidel(N, M, A, B, C, D, E, G, Eps, x, y, u)
     v0 = ones(N, M);
     for j = 1:M
         v0(1, j) = u(x(1), y(j));
@@ -10,16 +10,19 @@ function v = zeidel(N, M, A, B, C, D, E, G, Eps, x, y, u)
     end
     v1 = v0;
     
+    norms = [];
     while 1
         for i = 2:N-1
-            for j = M-1:-1:2
+            for j = 2:M-1
                 v1(i, j) =  (G(i, j) - ...
                   C(i, j)*v1(i, j-1) - D(i, j)*v1(i-1, j) - ...
                   B(i, j)*v0(i+1, j) - E(i, j)*v0(i, j+1)) / A(i, j);
             end
         end
         
-        if max(max(abs(v1 - v0))) < Eps
+        n = max(max(abs(v1 - v0))); 
+        norms = [norms, n];
+        if n < Eps
             break;
         end
         
