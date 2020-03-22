@@ -21,7 +21,7 @@ venv.bak/
 /m_bkup
 
 # docks
-.directory
+*.directory*
 .~lock*
 
 # tex

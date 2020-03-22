@@ -1,12 +1,58 @@
 clear;
 
-N = 28;
-EPS = 1e-7;
+N = 100;
+EPS = 1e-4;
 %calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100 1e-4
 %calculate(N, N, EPS*pi^2*(1/N)^2, @zeidel); %100 1e-4
 %calculate_sor(N, N, EPS*pi/N); % 28, 1e-7
 
 %calculate(N, N, EPS*pi^2*(1/N, @sor); 
+
+plot_errors(N, EPS)
+
+function plot_errors(N, EPS)
+    [u, q, a, b, f, x, y] = problem(N, N);
+    [A, B, C, D, E, G] = fvm(N, N, x, y, a, b, q, f);
+    U = print_u(x, y, u);
+    [v, e1] = jacobi(N, N, A, B, C, D, E, G, EPS*pi^2*(1/N)^2/2, x, y, u, U); 
+    [v, e2] = zeidel(N, N, A, B, C, D, E, G, EPS*pi^2*(1/N)^2, x, y, u, U);     
+    
+    N=28;
+    [u, q, a, b, f, x, y] = problem(N, N);
+    [A, B, C, D, E, G] = fvm(N, N, x, y, a, b, q, f);
+    U = print_u(x, y, u);
+    [v, e3] = sor(N, N, A, B, C, D, E, G, 1e-7*pi/N, x, y, u, 1.5, U); 
+    
+    l1 = length(e1);
+    x1 = zeros(1, l1);
+    y1 = zeros(1, l1);
+    for i=1:l1
+        x1(i) = i;
+        y1(i) = e1(i);
+    end
+    for i=1:length(e2)
+        x2(i) = i;
+        y2(i) = e2(i);
+    end
+    
+    for i=1:length(e3)
+        x3(i) = i;
+        y3(i) = e3(i);
+    end
+    
+    figure;
+    hold on;
+    grid on;
+    xlabel('iterations (k)');
+    ylabel('error (||u - v(k)||)');
+    set(gca,'FontSize',14);
+    axis([0, 4000, 0, 1]);
+    plot(x1, y1, '-r', 'linewidth', 3);
+    plot(x2, y2, '-g','linewidth', 3);
+    plot(x3, y3, '-b','linewidth', 3);
+    legend('Jacobi', 'zeidel', 'SOR');
+    %saveas(gcf, sprintf(sprintf('../pic/%s', 'aaa')), 'epsc');
+end
 
 function um = print_u(x, y, f)
     M = length(y);

@@ -1,6 +1,6 @@
-function [v, n] = sor(N, M, A, B, C, D, E, G, Eps, x, y, u, w)    
+function [v, e] = sor(N, M, A, B, C, D, E, G, Eps, x, y, u, w, U)    
     n = 0;
-    v0 = zeros(N, M);
+    v0 = ones(N, M);
     for j = 1:M
         v0(1, j) = u(x(1), y(j));
         v0(N, j) = u(x(N), y(j));
@@ -11,6 +11,7 @@ function [v, n] = sor(N, M, A, B, C, D, E, G, Eps, x, y, u, w)
     end
     v1 = v0;
     
+    e = [];
     while 1
         n = n + 1;
         for i = 2:N-1
@@ -22,6 +23,7 @@ function [v, n] = sor(N, M, A, B, C, D, E, G, Eps, x, y, u, w)
         end
         
         v1 = v0 + w * (v1 - v0);
+        e = [e, max(max(abs(U - v0)))];
         MAX = max(max(abs(v1 - v0)));
         %disp(MAX);
         if MAX < Eps 
