@@ -2,7 +2,7 @@ clear;
 
 N = 28;
 EPS = 1e-7;
-%calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100 1e-4
+calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100 1e-4
 %calculate(N, N, EPS*pi^2*(1/N)^2, @zeidel); %100 1e-4
 %calculate_sor(N, N, EPS*pi/N); % 28, 1e-7
 
