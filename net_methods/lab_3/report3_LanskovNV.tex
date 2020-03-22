@@ -205,13 +205,65 @@ v_{i,j}^{k+1} = \dfrac{1}{A_{i,j}} \cdot (G_{i,j} - D_{i,j}v_{i-1,j}^{k+1} - C_{
 v_{SOR}^{k+1} = v_{SOR}^{k} + \omega (v_{Z}^{k+1} - v_{SOR}^{k})
 \end{equation}
 
-Где $v_{Z}$ - вычисляется по метооду Зейделя
+Где $v_{Z}$ - вычисляется по методу Зейделя
 
 \section{Результаты}
 \subsection{Метод Якоби}
+
+Для достижения точности $\varepsilon = 10^{-3}$ возьмём чило разбиений равным $N = 100$ и $\varepsilon_{iter} = \dfrac{10^{-4}\pi^2}{2N^2}$. 
+
+\begin{figure}[H]
+\centerline{\includegraphics[scale = 0.8]{jacobiSpectre.eps}}
+\caption{Зависимость спектрального радиуса от числа итераций}
+\end{figure} 
+
+При этом $\rho_{J} = \lim\limits_{k\rightarrow \inf}{\dfrac{||v^{k+1} - v^{k}||}{||v^{k} - v^{k-1}||}} = 0.99945 \approx 0.99950 $, что согласуется с теоретическим значением.
+ 
 \subsection{Метод Зейделя}
+
+Для достижения точности $\varepsilon = 10^{-3}$ возьмём чило разбиений равным $N = 100$ и $\varepsilon_{iter} = \dfrac{10^{-4}\pi^2}{N^2}$. 
+
+\begin{figure}[H]
+\centerline{\includegraphics[scale = 0.8]{zeidelSpectre.eps}}
+\caption{Зависимость спектрального радиуса от числа итераций}
+\end{figure} 
+
+При этом $\rho_{Z} = \lim\limits_{k\rightarrow \inf}{\dfrac{||v^{k+1} - v^{k}||}{||v^{k} - v^{k-1}||}} = 0.99855 \approx 0.9990 = \rho_{J}^2$, что согласуется с теоретическим значением.
+
 \subsection{Метод SOR}
+
+\begin{figure}[H]
+\centerline{\includegraphics[scale = 0.8]{sor.eps}}
+\caption{Зависимость числа итераций $n(\varepsilon)$ от параметра релаксации $\omega$}
+\end{figure} 
+
+\begin{figure}[H]
+\centerline{\includegraphics[scale = 0.8]{sor2.eps}}
+\caption{Зависимость числа итераций $n(\varepsilon)$ от параметра релаксации $\omega$ (приближение)}
+\end{figure} 
+
+По графику видно, что оптимальным параметром релаксации будет $\omega = 1.73$. Однако, из теории следует, что оптимальный параметр должен равняться: $\omega_{opt} = \dfrac{2}{1+\sqrt{1 - \rho_{Z}}} \approx 1.9387$. Я пытался добиться большей точности от графического метода нахождения $\omega_{opt}$ изменяя $N$ и $\varepsilon_{iter}$, но мои попытки не принесли результатов, так как схема начинала терять устойчивость. Я думаю, что всё дело в выбранной мной конкретной задаче, и можно было бы теоретически подобрать исходную задачу точнее, чтобы получить лучший результат. Я же буду далее использовать полученное мною значение $\omega_{opt} = 1.73$.
+
 \subsection{Сравнение методов}
+
+\begin{table}[H]
+\caption{Сравнение методов}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Метод & $\rho$ & $\varepsilon_{iter}$ & $n(\varepsilon)$ \\
+\hline
+Jacobi & 0.99945 & 4.934802e-08 & 17712 \\
+\hline
+Zeidel & 0.99855 & 9.869604e-08 & 8858 \\
+\hline
+SOR & 0.9744 & 1.121997e-08 & 445 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
 \section{Выводы}
 \section{Приложения}
 Исходные файлы лабораторной работы можно найти тут: \\
