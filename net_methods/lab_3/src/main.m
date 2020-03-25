@@ -11,7 +11,7 @@ EPS = 1e-4;
 
 %calculate(52, 52, 3.650002e-06, @jacobi); % EPS=1e-3;
 %calculate(28, 28, 1e-9, @zeidel); % EPS=1e-3;
-calculate(28, 28, 1e-7 * pi/N2, @sor); % EPS=1e-3;
+calculate(100, 100, 1e-7 * pi/ 28, @sor); % EPS=1e-3;
 
 function plot_errors(N, N2, EPS)
     w = 1.5;
@@ -64,8 +64,8 @@ function calculate(N, M, epsIter, solver)
         graphics2(x1, y1, 'zeidelSpectre', false, 'iterations', 'spectral radius');
         
     else
-        l = 79;
-        s = 100;
+        l = 750;
+        s = 1000;
         wi = zeros(1, l);
         ni = zeros(1, l);
         for i = 1:l
