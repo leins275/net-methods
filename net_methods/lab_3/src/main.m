@@ -2,111 +2,84 @@ clear;
 
 N = 100;
 EPS = 1e-4;
-%calculate(N, N, EPS*pi^2*(1/N)^2/2, @jacobi); % 100 1e-4
-%calculate(N, N, EPS*pi^2*(1/N)^2, @zeidel); %100 1e-4
-%calculate_sor(N, N, EPS*pi/N); % 28, 1e-7
 
-%calculate(N, N, EPS*pi^2*(1/N, @sor); 
+%plot_errors(N, 28, EPS);
 
-plot_errors(N, EPS)
+%calculate(100, 100, 1e-4 * pi^2*(1/N)^2/2, @jacobi); 
+%calculate(100, 100, 1e-4 * pi^2*(1/N)^2, @zeidel); 
+%calculate(28, 28, EPS * pi/N, @sor); 
 
-function plot_errors(N, EPS)
+%calculate(52, 52, 3.650002e-06, @jacobi); % EPS=1e-3;
+%calculate(28, 28, 1e-9, @zeidel); % EPS=1e-3;
+calculate(28, 28, 1e-7 * pi/N2, @sor); % EPS=1e-3;
+
+function plot_errors(N, N2, EPS)
+    w = 1.5;
     [u, q, a, b, f, x, y] = problem(N, N);
     [A, B, C, D, E, G] = fvm(N, N, x, y, a, b, q, f);
-    U = print_u(x, y, u);
-    [v, e1] = jacobi(N, N, A, B, C, D, E, G, EPS*pi^2*(1/N)^2/2, x, y, u, U); 
-    [v, e2] = zeidel(N, N, A, B, C, D, E, G, EPS*pi^2*(1/N)^2, x, y, u, U);     
+    [v, n, e1] = jacobi(N, N, A, B, C, D, E, G, EPS * pi^2*(1/N)^2/2, x, y, u, w); 
+    [v, n, e2] = zeidel(N, N, A, B, C, D, E, G, EPS * pi^2*(1/N)^2, x, y, u, w);     
     
-    N=28;
-    [u, q, a, b, f, x, y] = problem(N, N);
-    [A, B, C, D, E, G] = fvm(N, N, x, y, a, b, q, f);
-    U = print_u(x, y, u);
-    [v, e3] = sor(N, N, A, B, C, D, E, G, 1e-7*pi/N, x, y, u, 1.5, U); 
+    [u, q, a, b, f, x, y] = problem(N2, N2);
+    [A, B, C, D, E, G] = fvm(N2, N2, x, y, a, b, q, f);
+    [v, n, e3] = sor(N2, N2, A, B, C, D, E, G, 1e-7 * pi/N2, x, y, u, w); 
     
-    l1 = length(e1);
-    x1 = zeros(1, l1);
-    y1 = zeros(1, l1);
-    for i=1:l1
-        x1(i) = i;
-        y1(i) = e1(i);
-    end
-    for i=1:length(e2)
-        x2(i) = i;
-        y2(i) = e2(i);
-    end
-    
-    for i=1:length(e3)
-        x3(i) = i;
-        y3(i) = e3(i);
-    end
-    
+    x1 = 1:length(e1);
+    x2 = 1:length(e2);
+    x3 = 1:length(e3);
+
     figure;
     hold on;
     grid on;
-    xlabel('iterations (k)');
-    ylabel('error (||u - v(k)||)');
+    xlabel('iterations: log(k)');
+    ylabel('error: log(||u - v(k)||)');
     set(gca,'FontSize',14);
-    axis([0, 4000, 0, 1]);
-    plot(x1, y1, '-r', 'linewidth', 3);
-    plot(x2, y2, '-g','linewidth', 3);
-    plot(x3, y3, '-b','linewidth', 3);
-    legend('Jacobi', 'zeidel', 'SOR');
-    %saveas(gcf, sprintf(sprintf('../pic/%s', 'aaa')), 'epsc');
-end
-
-function um = print_u(x, y, f)
-    M = length(y);
-    N = length(x);
-    um = zeros(N, M);
-    
-    for i = 1:N
-        for j = 1:M
-            um(i, j) = f(x(i), y(j));
-        end
-    end    
-    % graphics3(x, y, um, 'origin');
+    plot(log(x1), log(e1), '-r', 'linewidth', 2);
+    plot(log(x2), log(e2), '-g','linewidth', 2);
+    plot(log(x3), log(e3), '-b','linewidth', 2);
+    legend('Jacobi', 'zeidel', 'SOR', 'Location', 'southwest');
+    %saveas(gcf, sprintf(sprintf('../pic/%s', 'compare')), 'epsc');
 end
 
 function calculate(N, M, epsIter, solver)
+    w = 1.5;
     [u, q, a, b, f, x, y] = problem(N, M);
     [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
-    U = print_u(x, y, u);
-    [v, n] = solver(N, M, A, B, C, D, E, G, epsIter, x, y, u);
-    MAX = max(max(abs(U - v)));
-    fprintf("N = %d, M = %d, epsIter = %d \n", N, M, epsIter);
-    fprintf("||u - v|| = %d \n", MAX);
-    % graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
+    U = um(x, y, u);
     
-    l = length(n)-1;
-    x1 = zeros(1, l);
-    y1 = zeros(1, l);
-    for i = 1:l
-        x1(i) = i;
-        y1(i) = n(i+1) / n(i);
-    end
-    %graphics2(x1, y1, 'zeidelSpectre', false, 'iterations', 'spectral radius');
-    %graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
-end
-
-function calculate_sor(N, M, epsIter)
-    [u, q, a, b, f, x, y] = problem(N, M);
-    [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q, f);
-    U = print_u(x, y, u);
-    
-    %l = 75;
-    %s = 100;
-    %wi = zeros(1, l);
-    %ni = zeros(1, l);
-    %for i = 1:l
-    %    wi(i) = 1 + (i-1) / s;
-        [v, n] = sor(N, M, A, B, C, D, E, G, epsIter, x, y, u, 1.73);
+    if ~isequal(solver, @sor)
+        [v, n] = solver(N, M, A, B, C, D, E, G, epsIter, x, y, u, w);
         MAX = max(max(abs(U - v)));
-        fprintf("i = %d, n = %d, epsIter = %d \n", 1, n, epsIter);
-        fprintf("||u - v|| = %d \n", MAX)
-    %    ni(i) = n;
-    %end
-    %graphics2(wi, ni, 'sor', false, 'omega', 'iterations');
-    %graphics3(x, y, U, sprintf("||u - v|| = %d \n", MAX));
+        fprintf("N = %d, M = %d, epsIter = %d \n", N, M, epsIter);
+        fprintf("||u - v|| = %d \n", MAX);
+        
+        
+        l = length(n)-1;
+        x1 = zeros(1, l);
+        y1 = zeros(1, l);
+        for i = 1:l
+            x1(i) = i;
+            y1(i) = n(i+1) / n(i);
+        end
+        graphics2(x1, y1, 'zeidelSpectre', false, 'iterations', 'spectral radius');
+        
+    else
+        l = 79;
+        s = 100;
+        wi = zeros(1, l);
+        ni = zeros(1, l);
+        for i = 1:l
+            wi(i) = 1 + (i-1) / s;
+            [v, n] = solver(N, M, A, B, C, D, E, G, epsIter, x, y, u, wi(i));
+            MAX = max(max(abs(U - v)));
+            fprintf("n = %d, i = %d \n", n, i);
+            fprintf("N = %d, M = %d, epsIter = %d\n", N, M, epsIter);
+            fprintf("||u - v|| = %d \n", MAX);
+            ni(i) = n;
+        end
+        graphics2(wi, ni, 'sor', false, 'omega', 'iters');
+    end
+    %graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
 end
 
 function graphics2(x, y, name, save, xl, yl)

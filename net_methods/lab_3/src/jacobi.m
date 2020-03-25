@@ -1,4 +1,5 @@
-function [v, norms] = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u, U)
+function [v, norms, error] = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u, w)
+    U = um(x, y, u);
     v0 = ones(N, M);
     for j = 1:M
         v0(1, j) = u(x(1), y(j));
@@ -10,6 +11,7 @@ function [v, norms] = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u, U)
     end
     v1 = v0;
     
+    error = [];
     norms = [];
     while 1
         for i = 2:N-1
@@ -21,7 +23,8 @@ function [v, norms] = jacobi(N, M, A, B, C, D, E, G, Eps, x, y, u, U)
         end
         
         n = max(max(abs(v1 - v0))); 
-        norms = [norms, max(max(abs(U - v0)))];
+        norms = [norms, n];
+        error = [error, max(max(abs(U - v0)))];
         if n < Eps
             break;
         end

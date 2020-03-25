@@ -97,7 +97,7 @@
 
 $$
 \begin{cases}
--\dfrac{\partial}{\partial x}\left( a(x,y) \dfrac{\partial u}{\partial x}\right) - \dfrac{\partial}{\partial x}\left( a(x,y) \dfrac{\partial u}{\partial x}\right) + q(x,y)u = f(x,y)
+-\dfrac{\partial}{\partial x}\left( a(x,y) \dfrac{\partial u}{\partial x}\right) - \dfrac{\partial}{\partial y}\left( b(x,y) \dfrac{\partial u}{\partial y}\right) + q(x,y)u = f(x,y)
 \\ \\
 0 < \alpha < a, b < \beta; 0 < q_m < q; & (x,y) \in [3, 3.4] \times [1, 1.4] = \Omega
 \\ \\
@@ -112,7 +112,10 @@ a(x,y) = x + y \\
 b(x,y) = 1 + xy \\
 q(x,y) = x^4 \\
 g(x,y) = cos(2x) \cdot e^{-3y} \\
-f(x,y) = 3xcos(2x)e^{-3y}+4xsin(2x)e^{-3y} - 9cos(2x)e^{-3y}(xy + 1) + x^4cos(2x)e^{-2y} + \\ + 4cos(2x)e^{-3y}(x^2 + y^2)
+f(x,y) = 3xcos(2x)e^{-3y}+4xsin(2x)e^{-3y} - 9cos(2x)e^{-3y}(xy + 1) + x^4cos(2x)e^{-2y} + \\ + 4cos(2x)e^{-3y}(x^2 + y^2) \\
+\alpha = 3 \\
+\beta = 5 \\
+q_m = 80
 \end{cases}
 $$
 
@@ -122,22 +125,34 @@ $$
 
 Разобъём нашу область на конечные объёмы (с центрами во внутренних в узлах сетки). Тогда для каждой внутреней точки рассматриваем конечный объём $\Omega_{ij}$. Далее приведём вычисления в общем виде для такого конечного объёма.
 
+\begin{figure}[H] \label{fig1}
+\centerline{\includegraphics[scale = 0.2]{image.jpg}}
+\caption{Илюстрация рассматриваемого конечного объёма}
+\end{figure} 
+
 Проинтегрируем уравнение 1 по конечному объёму и домножим на -1:
 \begin{equation}
 \int\limits_{\Omega_{ij}}{\left[ \dfrac{\partial}{\partial x}\left( a\dfrac{\partial u}{\partial x}\right) + \dfrac{\partial}{\partial y}\left( b\dfrac{\partial u}{\partial y}\right) \right]d\Omega}
  - \int\limits_{\Omega_{ij}}qud\Omega = \int\limits_{\Omega_{ij}}fd\Omega 
 \end{equation}
 
-Подробнее рассмотрим первое слагаемое из левой части. Под интегралом стоит дивергенция, применяем формулу Остроградского-Гаусса, получаем следующее выражение:
-
-\begin{eqnarray}
-\oint\limits_{\gamma_{ij}}{\left[ a\dfrac{\partial u}{\partial x}cos(n,x) + b\dfrac{\partial u}{\partial y}cos(n,y) \right]d\gamma} = \left[ \omega^x = a\dfrac{\partial u}{\partial x}; \omega^y =  b\dfrac{\partial u}{\partial y} \right] = 
-\\
+Подробнее рассмотрим первое слагаемое из левой части. Под интегралом стоит дивергенция, применяем формулу Остроградского-Гаусса и получаем следующее выражение:
+$\oint\limits_{\gamma_{ij}}{\left[ a\dfrac{\partial u}{\partial x}cos(n,x) + b\dfrac{\partial u}{\partial y}cos(n,y) \right]d\gamma}$.
+Выполняем замену переменных: 
+\begin{equation}\label{eq4}
+\left[ \omega^x = a\dfrac{\partial u}{\partial x}; \omega^y =  b\dfrac{\partial u}{\partial y} \right]
+\end{equation}
+и приближённо вычисляем интегралы по границе (отдельно для каждого из двух слагаемых под интегралом). Заметим, что, с учётом граничных нормалей, в первом интеграле останется только два слагаемых(по левой и правой границам конечного объёма $\Omega_{i,j}$), как, впрочем, и во втором(но уже по верхней и нижней границам). Таким образом, приходим к следующей формуле.
+ 
+\begin{equation}\label{eq3}
+\oint\limits_{\gamma_{ij}}{\left[ a\dfrac{\partial u}{\partial x}cos(n,x) + b\dfrac{\partial u}{\partial y}cos(n,y) \right]d\gamma} 
  = \left( w_{i+0.5,j}^x - w_{i-0.5,j}^x \right) h_y + 
 \left( w_{i,j+0.5}^y - w_{i,j-0.5}^y \right) h_x 
-\end{eqnarray}
+\end{equation}
 
-Тут мы произвели определённую замену переменных и раскрыли косинусы, появившиеся после применения формулы О-Г. С учётом данной замены, легко видеть, что выполнены следующие равенства:
+Где, в частности, $w_{i+0.5,j}^x$ - значение $w^x$ в средней точке соответсвующего участка границы
+
+С учётом замены (\ref{eq4}), легко видеть, что выполнены следующие равенства:
 
 \begin{equation}\label{eq1}
 \int\limits_{\Omega_{ij}^{'}}{\dfrac{\omega^x}{a}d\Omega} = \int\limits_{\Omega_{ij}^{'}}{\dfrac{\partial u}{\partial x}d\Omega} 
@@ -146,17 +161,34 @@ $$
 \int\limits_{\Omega_{ij}^{''}}{\dfrac{\omega^y}{b}d\Omega} = \int\limits_{\Omega_{ij}^{''}}{\dfrac{\partial u}{\partial y}d\Omega}
 \end{equation}
 
+В формулах (\ref{eq1}), (\ref{eq2}) - $\Omega_{ij}^{'}$ и $\Omega_{ij}^{''}$ это конечные объёмы, сдвинутые на половину шага в направлении оси Ох и Оy соответственно. Также, эти конечные объёмы изображениы на рисунке (\ref{fig1}).
 Рассмотрим подробнее (\ref{eq1}). Применяя к правой части теорему О-Г., а левую часть преобразовав определённым образом, получаем уже конечно-разностное выражение.
 
 $$
 (\ref{eq1}) \Longleftrightarrow \omega_{i+0.5,j}^x \cdot \int\limits_{\Omega_{ij}^{'}}{\dfrac{d\Omega}{a}} = (v_{i+1,j} - v_{ij})h_y
 $$
 
-Отсюда легко можно найти выражение для $\omega_{i+0.5,j}^x$, посчитав численно интеграл. Точно также рассматриваем (\ref{eq2}), и сразу записываем итоговое выражение, сгруппировав слагаемые при соответствующих узновых точках.
+Отсюда легко можно найти выражение для $\omega_{i+0.5,j}^x$, посчитав численно интеграл. Точно также рассматриваем (\ref{eq2}). Обозначив 
+$$
+p_{i+0.5, j} = \dfrac{h_xh_y}{\int\limits_{\Omega_{ij}^{'}}{\dfrac{d\Omega}{a}}} ; \quad
+q_{i, j+0.5} = \dfrac{h_xh_y}{\int\limits_{\Omega_{ij}^{''}}{\dfrac{d\Omega}{b}}}; 
+$$ 
+получаем уравнение(для $p_{i-0.5, j}$ и $q_{i, j-0.5}$ выражения аналогичны, изменятся только конечные объёмы, т.е. будут "сдвиги" в другом направлении):
 
 \begin{eqnarray}
-\left( \dfrac{p_{i+0.5, j} + p_{i-0.5, j}}{h_x^2} + \dfrac{q_{i, j+0.5} + q_{i, j-0.5}}{h_y^2} + \dfrac{\rho_{ij}}{h_xh_y} \right) v_{ij} - \nonumber \\
-\left( \dfrac{p_{i-0.5, j}v_{i-1,j} + p_{i+0.5, j}v_{i+1,j}}{h_x^2} + \dfrac{q_{i, j+0.5}v_{i,j+1} + q_{i, j-0.5}v_{i,j-1}}{h_y^2} \right) = g_{ij}
+\dfrac{1}{h_x^2}(p_{i+0.5,j}(v_{i+1,j}-v_{i,j}) - p_{ij}(v_{i,j}-v_{i-1,j})) +
+\dfrac{1}{h_y^2}(q_{i,j+0.5}(v_{i,j+1}-v_{i,j}) - q_{ij}(v_{i,j}-v_{i,j-1})) + \nonumber
+\\
++ \dfrac{\rho_{ij}}{h_xh_y}v_{ij}= \dfrac{g_{ij}}{h_xh_y}
+\end{eqnarray}
+
+Сгруппировав слагаемые при соответствующих узновых точках, получим:
+
+\begin{eqnarray}
+ - \left( \dfrac{p_{i-0.5, j}v_{i-1,j} + p_{i+0.5, j}v_{i+1,j}}{h_x^2} + \dfrac{q_{i, j+0.5}v_{i,j+1} + q_{i, j-0.5}v_{i,j-1}}{h_y^2} \right) + \nonumber 
+\\
++ \left( \dfrac{p_{i+0.5, j} + p_{i-0.5, j}}{h_x^2} + \dfrac{q_{i, j+0.5} + q_{i, j-0.5}}{h_y^2} + \dfrac{\rho_{ij}}{h_xh_y} \right) v_{ij}
+ = \dfrac{g_{ij}}{h_xh_y}
 \end{eqnarray}
 
 Все вышеперечисленные выражения я привёл в общем виде для упрощения восприятия. Теперь рассмотрим, чему равны коэффициенты в контексте конкретной задачи.
@@ -178,7 +210,19 @@ g_{ij} = \int\limits_{\Omega_{ij}}{fd \Omega}
 \int\limits_{[x_0; x_1] \times [y_0; y_1]}{\phi(x, y)d\Omega} = \dfrac{(x_1-x_0)(y_1-y_0)}{4} \sum\limits_{i=1}^4\phi\left(x_0 + \dfrac{(\xi_i+1)(x_1-x_0)}{2} ,y0 + \dfrac{(\eta_i+1)(y_1-y_0)}{2} \right)
 \end{equation}
 Где $\xi_i$ и $\eta_i$ представляют все пары вида $\left(\dfrac{\pm 1}{\sqrt{3}}; \dfrac{\pm 1}{\sqrt{3}}\right)$
- 
+
+Тут используется отображение иходного прямоугольника на базисный. Для этого используются следующие формулы:
+
+\begin{equation}
+\begin{cases}
+\xi(x, y) = 2 \dfrac{x - x_0}{x_1-x_0} - 1 \\
+\eta(x, y) = 2 \dfrac{y - y_0}{y_1-y_0} - 1
+\end{cases}
+\end{equation}
+
+Подробнее про то, как получить эту формулу можно посмотреть, например, тут :
+\url{https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BA%D0%B2%D0%B0%D0%B4%D1%80%D0%B0%D1%82%D1%83%D1%80%D0%BD%D1%8B%D1%85_%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB}
+
 \section{Метод Якоби}
 
 Будем применять итерационную процедуру метода Якоби в следующем виде:
