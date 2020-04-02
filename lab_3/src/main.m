@@ -5,11 +5,11 @@ EPS = 1e-4;
 
 %plot_errors(N, 28, EPS);
 
-calculate(100, 100, 1e-4 * pi^2*(1/N)^2/2, @jacobi); 
+%calculate(100, 100, 1e-4 * pi^2*(1/N)^2/2, @jacobi); 
 %calculate(100, 100, 1e-4 * pi^2*(1/N)^2, @zeidel); 
 %calculate(28, 28, EPS * pi/N, @sor); 
 
-%calculate(52, 52, 3.650002e-06, @jacobi); % EPS=1e-3;
+calculate(100, 100, 1e-10, @jacobi); % EPS=1e-3;
 %calculate(28, 28, 1e-9, @zeidel); % EPS=1e-3;
 %calculate(100, 100, 1e-7 * pi/ 28, @sor); % EPS=1e-3;
 
@@ -79,7 +79,7 @@ function calculate(N, M, epsIter, solver)
         end
         graphics2(wi, ni, 'sor', false, 'omega', 'iters');
     end
-    %graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
+    graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
 end
 
 function graphics2(x, y, name, save, xl, yl)
