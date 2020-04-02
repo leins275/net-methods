@@ -11,11 +11,11 @@ function [A, B, C, D, E, G] = fvm(N, M, x, y, a, b, q1, f)
     a_inv = @(x, y) 1 ./ a(x,y);
     b_inv = @(x, y) 1 ./ b(x,y);
     
-    p = @(i, j) hx*hy / quad2d(a_inv, x(i-1), x(i), y(j)-hy/2, y(j)+hy/2);
-    q = @(i, j) hx*hy / quad2d(b_inv, x(i)-hx/2, x(i)+hx/2, y(j-1), y(j));
+    p = @(i, j) hx*hy / gauss(a_inv, x(i-1), x(i), y(j)-hy/2, y(j)+hy/2);
+    q = @(i, j) hx*hy / gauss(b_inv, x(i)-hx/2, x(i)+hx/2, y(j-1), y(j));
     
-    q_int = @(i, j) quad2d(q1, x(i)-hx/2, x(i)+hx/2, y(j)-hy/2, y(j)+hy/2);
-    g = @(i, j) quad2d(f, x(i)-hx/2, x(i)+hx/2, y(j)-hy/2, y(j)+hy/2);
+    q_int = @(i, j) gauss(q1, x(i)-hx/2, x(i)+hx/2, y(j)-hy/2, y(j)+hy/2);
+    g = @(i, j) gauss(f, x(i)-hx/2, x(i)+hx/2, y(j)-hy/2, y(j)+hy/2);
         
     for i = 2:N-1
         for j = 2:M-1

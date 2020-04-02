@@ -1,11 +1,11 @@
 clear;
 
-N = 10;
+N = 100;
 EPS = 1e-4;
 
 %plot_errors(N, 28, EPS);
 
-calculate(10, 10, 1e-4 * pi^2*(1/N)^2/2, @jacobi); 
+calculate(100, 100, 1e-4 * pi^2*(1/N)^2/2, @jacobi); 
 %calculate(100, 100, 1e-4 * pi^2*(1/N)^2, @zeidel); 
 %calculate(28, 28, EPS * pi/N, @sor); 
 
