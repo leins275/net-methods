@@ -1,17 +1,13 @@
 clear;
 
-N = 100;
-EPS = 1e-4;
+N = 30;
+EPS = 1e-10;
 
 %plot_errors(N, 28, EPS);
 
-%calculate(100, 100, 1e-4 * pi^2*(1/N)^2/2, @jacobi); 
+calculate(N, N, EPS, @jacobi); 
 %calculate(100, 100, 1e-4 * pi^2*(1/N)^2, @zeidel); 
 %calculate(28, 28, EPS * pi/N, @sor); 
-
-calculate(100, 100, 1e-10, @jacobi); % EPS=1e-3;
-%calculate(28, 28, 1e-9, @zeidel); % EPS=1e-3;
-%calculate(100, 100, 1e-7 * pi/ 28, @sor); % EPS=1e-3;
 
 function plot_errors(N, N2, EPS)
     w = 1.5;
@@ -64,8 +60,8 @@ function calculate(N, M, epsIter, solver)
         graphics2(x1, y1, 'zeidelSpectre', false, 'iterations', 'spectral radius');
         
     else
-        l = 750;
-        s = 1000;
+        l = 100;
+        s = 100;
         wi = zeros(1, l);
         ni = zeros(1, l);
         for i = 1:l
@@ -79,7 +75,7 @@ function calculate(N, M, epsIter, solver)
         end
         graphics2(wi, ni, 'sor', false, 'omega', 'iters');
     end
-    graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
+    % graphics3(x, y, v, sprintf("||u - v|| = %d \n", MAX));
 end
 
 function graphics2(x, y, name, save, xl, yl)

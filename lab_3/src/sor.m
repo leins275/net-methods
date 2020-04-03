@@ -20,12 +20,10 @@ function [v, n, error] = sor(N, M, A, B, C, D, E, G, Eps, x, y, u, w)
                 v1(i, j) =  (G(i, j) - ...
                   C(i, j)*v1(i, j-1) - D(i, j)*v1(i-1, j) - ...
                   B(i, j)*v0(i+1, j) - E(i, j)*v0(i, j+1)) / A(i, j);
+                v1(i, j) = v0(i, j) + w * (v1(i, j) - v0(i, j));
             end
         end
-        
-        v1 = v0 + w * (v1 - v0);
         error = [error, max(max(abs(U - v0)))];
-        
         if max(max(abs(v1 - v0))) < Eps 
             break;
         end
